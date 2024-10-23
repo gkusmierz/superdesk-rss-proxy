@@ -1,0 +1,12 @@
+services:
+  rss-proxy:
+    image: rss-proxy:latest
+    ports:
+      - "8000:8000"
+    networks:
+      - default
+
+networks:
+  default:
+    name: services-network
+    external: true
