@@ -1,8 +1,20 @@
 services:
-  rss-proxy:
+  lublin112:
     image: rss-proxy:latest
+    container_name: lublin112
+    environment:
+      - RSS_FEED_URL=https://www.lublin112.pl/feed/
     ports:
-      - "8000:8000"
+      - "8010:8000"
+    networks:
+      - default
+  kurier-lubelski:
+    image: rss-proxy:latest
+    container_name: kurier-lubelski
+    environment:
+      - RSS_FEED_URL=https://kurierlubelski.pl/rss/kurierlubelski.xml
+    ports:
+      - "8011:8000"
     networks:
       - default
 

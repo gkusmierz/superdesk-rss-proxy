@@ -1,11 +1,16 @@
 from flask import Flask, Response, request, make_response
 import cloudscraper
+import os
 
 app = Flask(__name__)
 
+# Fetch the environment variable for the RSS feed URL, with a default
+RSS_FEED_URL = os.getenv('RSS_FEED_URL', 'https://www.lublin112.pl/feed/')
+
 @app.route('/feed')
 def proxy_feed():
-    rss_url = request.args.get('url', 'https://www.lublin112.pl/feed/')
+    # Use the query parameter if provided, otherwise use the environment variable
+    rss_url = request.args.get('url', RSS_FEED_URL)
 
     headers = {
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:130.0) Gecko/20100101 Firefox/130.0',
@@ -42,4 +47,4 @@ def proxy_feed():
         return f"Error fetching RSS feed: {e}", 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8001)
+    app.run(host='0.0.0.0', port=8000)
